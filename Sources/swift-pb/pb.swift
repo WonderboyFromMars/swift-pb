@@ -21,7 +21,7 @@ public struct ProgressBar {
     fileprivate var barRemain: String
     fileprivate var barEnd: String
     fileprivate var tick: [String]
-    fileprivate var tickState: UInt
+    fileprivate var tickState: Int
     //fileprivate var width: Option<usize>
     fileprivate var message: String
     fileprivate var lastRefreshTime: Date
@@ -62,12 +62,12 @@ public struct ProgressBar {
 
     public mutating func format(_ fmt: String) {
         if fmt.count >= 5 {
-            let barElements = fmt.components(separatedBy: "")
-            barStart = barElements[0]
-            barCurrent = barElements[1]
-            barCurrentN = barElements[2]
-            barRemain = barElements[3]
-            barEnd = barElements[4]
+            let barElements = Array(fmt)
+            barStart = String(barElements[0])
+            barCurrent = String(barElements[1])
+            barCurrentN = String(barElements[2])
+            barRemain = String(barElements[3])
+            barEnd = String(barElements[4])
         }
         
     }
@@ -84,12 +84,88 @@ public struct ProgressBar {
         tick = tickFmt.components(separatedBy: "")
     }
 
-    func draw() {
+    mutating func ticker() {
+        tickState = (tickState + 1) % tick.count
+        if current <= total {
+            draw()
+        }
+    }
+    mutating func add(_ i: Int) -> UInt {
+        current += 1
+        ticker()
+        return current
+    }
+    mutating func draw() {
         let now = Date()
 
         let elapsedNano = Calendar.current.dateComponents([.nanosecond], from: self.startTime, to: now).nanosecond
         let elapsedSec = Calendar.current.dateComponents([.second], from: self.startTime, to: now).second
         let speed = Double(self.current) / fracDur(nanoSec: elapsedNano!, sec: elapsedSec!)
+        let width = 40
+        var base = ""
+        var suffix = ""
+        var prefix = ""
+        var out = ""
+        
+        if self.showPercent {
+            let percent = Double(current) / Double(total) / 100.0
+            suffix = suffix + String(format: "%3.2f", percent.isNaN ? 0.0 : percent)
+        }
+        
+        if showSpeed {
+            
+        }
+        
+        if showTimeLeft && current > 0 {
+            if total > current {
+                let left = 1.0 / speed * Double(total - current)
+                if left < 60.0 {
+                    suffix = suffix + String(format: "%u s", left)
+                } else {
+                    suffix = suffix + String(format: "%u m", left / 60.0)
+                }
+            }
+        }
+        
+        if showMessage {
+            prefix = prefix + message
+        }
+        
+        if showCounter {
+            prefix = prefix + String(format: "%u / %u", current, total)
+            
+        }
+        
+        if showTick {
+            prefix = prefix + tick[tickState]
+        }
+        
+        if showBar {
+            let p = prefix.count + suffix.count + 3
+            if p < width {
+                let size = width - p
+                let currCount = Int(((Double(current) / Double(total)) * Double(size)).rounded())
+                if size >= currCount {
+                    let remainCount = size - currCount
+                    base = barStart
+                    if remainCount > 0 && currCount > 0 {
+                        base = base + String(repeating: barCurrent, count: currCount - 1) + barCurrentN
+                    } else {
+                        base = base + String(repeating: barCurrent, count: currCount)
+                    }
+                    base = base + String(repeating: barRemain, count: remainCount) + barEnd
+                }
+            }
+        }
+        
+        out = prefix + base + suffix
+        if out.count < width {
+            let gap = width - out.count
+            out = out + String(repeating: " ", count: gap)
+        }
+        //print("\r \(out)")
+        print("\u{1B}[1A\u{1B}[K\(out)")
+        lastRefreshTime = Date()
     }
 }
 
