@@ -9,7 +9,7 @@ final class swift_pbTests: XCTestCase {
         XCTAssertEqual(swift_pb().text, "Hello, World!")
         
         var pb = ProgressBar(total: 100_000)
-        pb.tickFormat(Constants.TICK_FORMAT)
+        pb.tickFormat("▀▐▄▌")
         pb.format("[=>_]")
         for _ in 0..<100_000 {
             pb.add(1)

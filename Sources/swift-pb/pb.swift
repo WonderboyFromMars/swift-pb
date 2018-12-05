@@ -20,7 +20,7 @@ public struct ProgressBar {
     fileprivate var barCurrentN: String
     fileprivate var barRemain: String
     fileprivate var barEnd: String
-    fileprivate var tick: [String]
+    fileprivate var tick: Array<Character>
     fileprivate var tickState: Int
     //fileprivate var width: Option<usize>
     fileprivate var message: String
@@ -53,7 +53,7 @@ public struct ProgressBar {
         barCurrentN = ""
         barRemain = ""
         barEnd = ""
-        tick = [String]()
+        tick = Array<Character>()
         lastRefreshTime = Date()
         maxRefreshRate = nil
         message = ""
@@ -81,7 +81,7 @@ public struct ProgressBar {
             showTick = true
         }
 
-        tick = tickFmt.components(separatedBy: "")
+        tick = Array(String(tickFmt))
     }
 
     mutating func ticker() {
@@ -137,7 +137,7 @@ public struct ProgressBar {
         }
         
         if showTick {
-            prefix = prefix + tick[tickState]
+            prefix = prefix + String(tick[tickState])
         }
         
         if showBar {
