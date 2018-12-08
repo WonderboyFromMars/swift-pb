@@ -11,6 +11,7 @@ final class swift_pbTests: XCTestCase {
         var pb = ProgressBar(total: 100_000)
         pb.tickFormat("▀▐▄▌")
         pb.format("[=>_]")
+        pb.showPercent = true
         for _ in 0..<100_000 {
             pb.add(1)
         }

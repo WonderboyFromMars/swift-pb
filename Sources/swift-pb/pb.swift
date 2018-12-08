@@ -98,18 +98,18 @@ public struct ProgressBar {
     mutating func draw() {
         let now = Date()
 
-        let elapsedNano = Calendar.current.dateComponents([.nanosecond], from: self.startTime, to: now).nanosecond
+        //let elapsedNano = Calendar.current.dateComponents([.nanosecond], from: self.startTime, to: now).nanosecond
         let elapsedSec = Calendar.current.dateComponents([.second], from: self.startTime, to: now).second
-        let speed = Double(self.current) / fracDur(nanoSec: elapsedNano!, sec: elapsedSec!)
-        let width = 40
+        let speed = 1.0//Double(self.current) / fracDur(nanoSec: elapsedNano!, sec: elapsedSec!)
+        let width = 100
         var base = ""
         var suffix = ""
         var prefix = ""
         var out = ""
         
         if self.showPercent {
-            let percent = Double(current) / Double(total) / 100.0
-            suffix = suffix + String(format: "%3.2f", percent.isNaN ? 0.0 : percent)
+            let percent = Double(current) / (Double(total) / 100.0)
+            suffix = suffix + String(format: "%.01f %", percent.isNaN ? 0.0 : percent)
         }
         
         if showSpeed {
