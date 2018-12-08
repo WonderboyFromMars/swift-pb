@@ -34,6 +34,7 @@ public struct ProgressBar {
     public var showTimeLeft: Bool
     public var showTick: Bool
     public var showMessage: Bool
+    public var width : Int
 
     public init(total: UInt) {
         self.total = total
@@ -58,6 +59,7 @@ public struct ProgressBar {
         maxRefreshRate = nil
         message = ""
         tickState = 0
+        width = 0
     }
 
     public mutating func format(_ fmt: String) {
@@ -96,13 +98,11 @@ public struct ProgressBar {
         return current
     }
     mutating func draw() {
-        //let now = Date()
-
-        //let elapsedNano = Calendar.current.dateComponents([.nanosecond], from: self.startTime, to: now).nanosecond
-//        let elapsedSec = Calendar.current.dateComponents([.second], from: self.startTime, to: now).second
         let elapsedSec = Date().timeIntervalSince(startTime)
         let speed = Double(self.current) / elapsedSec
-        let width = 100
+        if width == 0 {
+            width = Int(terminalSize().1)
+        }
         var base = ""
         var suffix = ""
         var prefix = ""
@@ -164,12 +164,7 @@ public struct ProgressBar {
             let gap = width - out.count
             out = out + String(repeating: " ", count: gap)
         }
-        //print("\r \(out)")
         print("\u{1B}[1A\u{1B}[K\(out)")
         lastRefreshTime = Date()
     }
-}
-
-func fracDur(nanoSec: Int, sec: Int) -> Double {
-    return Double(sec) + Double(nanoSec) / Double(Constants.NANO_PER_SEC)
 }
