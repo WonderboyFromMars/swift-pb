@@ -5,6 +5,19 @@ public enum Units {
     case Bytes
 }
 
+fileprivate func kbFmt(_ val: Double) -> String {
+    let kb = 1024.0
+    if val >= pow(kb, 4) {
+        return String(format: "%.2f TB", val / pow(kb, 4))
+    } else if val >= pow(kb, 3) {
+        return String(format: "%.2f GB", val / pow(kb, 3))
+    } else if val >= pow(kb, 2) {
+        return String(format: "%.2f MB", val / pow(kb, 2))
+    } else if val >= kb {
+        return String(format: "%.2f KB", val / kb)
+    }
+    return String(format: "%.2f B", val)
+}
 struct Constants {
     static let TICK_FORMAT = "\\|/-"
     static let NANO_PER_SEC = 1_000_000_000
@@ -12,7 +25,7 @@ struct Constants {
 
 public struct ProgressBar {
     fileprivate var startTime : Date
-    fileprivate let units : Units
+    public var units : Units
     public let total : UInt
     var current : UInt
     fileprivate var barStart: String
@@ -54,7 +67,7 @@ public struct ProgressBar {
         barCurrentN = ""
         barRemain = ""
         barEnd = ""
-        tick = Array<Character>()
+        tick = Array(Constants.TICK_FORMAT)
         lastRefreshTime = Date()
         maxRefreshRate = nil
         message = ""
@@ -114,6 +127,12 @@ public struct ProgressBar {
         }
         
         if showSpeed {
+            switch self.units {
+            case .Default:
+                suffix += String(format: "%f/s", speed)
+            case .Bytes:
+                suffix += kbFmt(speed)
+            }
             
         }
         
@@ -133,7 +152,7 @@ public struct ProgressBar {
         }
         
         if showCounter {
-            prefix = prefix + String(format: "%u / %u", current, total)
+            prefix = prefix + String(format: "%u/%u", current, total)
             
         }
         

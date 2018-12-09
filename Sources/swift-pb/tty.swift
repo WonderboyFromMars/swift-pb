@@ -19,7 +19,9 @@ func terminalSize() -> (UInt16, UInt16) {
     
     var winSize = winsize()
     
-    ioctl(STDOUT_FILENO, UInt(TIOCGWINSZ), &winSize)
+    guard ioctl(STDOUT_FILENO, UInt(TIOCGWINSZ), &winSize) == 0 else {
+        fatalError("ioctl call failed")
+    }
     
     print("col: \(winSize.ws_col)")
     let rows = winSize.ws_row

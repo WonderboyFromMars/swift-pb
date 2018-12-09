@@ -9,12 +9,18 @@ final class swift_pbTests: XCTestCase {
         XCTAssertEqual(swift_pb().text, "Hello, World!")
         
         var pb = ProgressBar(total: 100_000)
-        pb.tickFormat("▀▐▄▌")
-        pb.format("[=>_]")
-        pb.showTimeLeft = true
+        //pb.tickFormat("▀▐▄▌")
+        //pb.tickFormat("\\|/-")
+        pb.showTick = true
+        pb.format("╢▌▌░╟")
+        pb.showTimeLeft = false
         pb.showPercent = false
+        pb.showSpeed = true
+        pb.units = .Bytes
         for _ in 0..<100_000 {
-            pb.add(1)
+            usleep(100)
+            let _ = pb.add(1)
+            
         }
     }
 
