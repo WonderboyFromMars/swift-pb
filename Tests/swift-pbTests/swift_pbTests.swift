@@ -6,7 +6,6 @@ final class swift_pbTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(swift_pb().text, "Hello, World!")
         
         var pb = ProgressBar(total: 100_000)
         //pb.tickFormat("▀▐▄▌")

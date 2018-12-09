@@ -23,7 +23,6 @@
 /* Begin PBXBuildFile section */
 		892928C021BBEA00007F9FC1 /* tty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 892928BF21BBEA00007F9FC1 /* tty.swift */; };
 		OBJ_23 /* pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_9 /* pb.swift */; };
-		OBJ_24 /* swift_pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* swift_pb.swift */; };
 		OBJ_31 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_6 /* Package.swift */; };
 		OBJ_42 /* XCTestManifests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* XCTestManifests.swift */; };
 		OBJ_43 /* swift_pbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* swift_pbTests.swift */; };
@@ -42,7 +41,6 @@
 
 /* Begin PBXFileReference section */
 		892928BF21BBEA00007F9FC1 /* tty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tty.swift; sourceTree = "<group>"; };
-		OBJ_10 /* swift_pb.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_pb.swift; sourceTree = "<group>"; };
 		OBJ_13 /* XCTestManifests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestManifests.swift; sourceTree = "<group>"; };
 		OBJ_14 /* swift_pbTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_pbTests.swift; sourceTree = "<group>"; };
 		OBJ_6 /* Package.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -97,7 +95,7 @@
 			name = Products;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		OBJ_5 /*  */ = {
+		OBJ_5 = {
 			isa = PBXGroup;
 			children = (
 				OBJ_6 /* Package.swift */,
@@ -105,7 +103,6 @@
 				OBJ_11 /* Tests */,
 				OBJ_15 /* Products */,
 			);
-			name = "";
 			sourceTree = "<group>";
 		};
 		OBJ_7 /* Sources */ = {
@@ -120,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_9 /* pb.swift */,
-				OBJ_10 /* swift_pb.swift */,
 				892928BF21BBEA00007F9FC1 /* tty.swift */,
 			);
 			name = "swift-pb";
@@ -192,7 +188,7 @@
 			knownRegions = (
 				en,
 			);
-			mainGroup = OBJ_5 /*  */;
+			mainGroup = OBJ_5;
 			productRefGroup = OBJ_15 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -211,7 +207,6 @@
 			buildActionMask = 0;
 			files = (
 				OBJ_23 /* pb.swift in Sources */,
-				OBJ_24 /* swift_pb.swift in Sources */,
 				892928C021BBEA00007F9FC1 /* tty.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
