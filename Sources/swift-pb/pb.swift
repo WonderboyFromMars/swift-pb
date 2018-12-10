@@ -23,11 +23,24 @@ struct Constants {
     static let NANO_PER_SEC = 1_000_000_000
 } 
 
+/**
+ The progressbar!
+ It can be incremented and the bar will update itself and print a nice terminal based
+ progress bar.
+ */
 public struct ProgressBar {
+    /// The start time of the bar. This is the reference time for calculations
     fileprivate var startTime : Date
+    
+    /// The units to display, if *showSpeed* is active
     public var units : Units
+    
+    /// The total number of iterations of the bar
     public let total : UInt
-    var current : UInt
+    
+    /// The current iteration
+    fileprivate var current : UInt
+    
     fileprivate var barStart: String
     fileprivate var barCurrent: String
     fileprivate var barCurrentN: String
@@ -35,7 +48,6 @@ public struct ProgressBar {
     fileprivate var barEnd: String
     fileprivate var tick: Array<Character>
     fileprivate var tickState: Int
-    //fileprivate var width: Option<usize>
     fileprivate var message: String
     fileprivate var lastRefreshTime: Date
     fileprivate var maxRefreshRate: Date?
@@ -74,7 +86,19 @@ public struct ProgressBar {
         tickState = 0
         width = 0
     }
-
+    
+    /**
+     Sets the format of the bar, e.g. ╢▌▌░╟ will create a bar of the type
+     ```
+     ╢▌▌▌▌▌░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░╟
+     ```
+     - Parameter fmt: The format string to use
+        - first char is the start of the bar
+        - second char is the character for the current position
+        - third char is the character for the next position
+        - fourth char is the fill character
+        - last char is the end of the bar
+    */
     public mutating func format(_ fmt: String) {
         if fmt.count >= 5 {
             let barElements = Array(fmt)
@@ -105,7 +129,25 @@ public struct ProgressBar {
             draw()
         }
     }
-    mutating func add(_ i: Int) -> UInt {
+    /**
+     Increment the progress bar by one. This is the same as invoking
+     ```
+        let i = pb.add(1)
+     ```
+     - Returns: current count of the progressbar
+     
+    */
+    public mutating func inc() -> UInt {
+        return add(1)
+    }
+    
+    /**
+     Increment the progress bar by a number.
+     
+     - Parameter i: how much the progressbar should be incremented
+     - Returns: the current state of the counter
+    */
+    public mutating func add(_ i: Int) -> UInt {
         current += 1
         ticker()
         return current
