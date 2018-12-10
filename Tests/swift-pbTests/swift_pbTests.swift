@@ -12,9 +12,9 @@ final class swift_pbTests: XCTestCase {
         //pb.tickFormat("\\|/-")
         pb.showTick = true
         pb.format("╢▌▌░╟")
-        pb.showTimeLeft = false
-        pb.showPercent = false
-        pb.showSpeed = true
+        pb.showTimeLeft = true
+        pb.showPercent = true
+        pb.showSpeed = false
         pb.units = .Bytes
         for _ in 0..<100_000 {
             usleep(100)

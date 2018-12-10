@@ -182,9 +182,9 @@ public struct ProgressBar {
             if total > current {
                 let left = 1.0 / speed * Double(total - current)
                 if left < 60.0 {
-                    suffix = suffix + String(format: "%f s", left)
+                    suffix = suffix + String(format: "%.00f s", left)
                 } else {
-                    suffix = suffix + String(format: "%f m", left / 60.0)
+                    suffix = suffix + String(format: "%.00f m", left / 60.0)
                 }
             }
         }
