@@ -16,9 +16,13 @@ final class swift_pbTests: XCTestCase {
         pb.showPercent = true
         pb.showSpeed = false
         pb.units = .Bytes
-        for _ in 0..<100_000 {
-            usleep(100)
-            let _ = pb.add(1)
+        for i in 0..<100_000 {
+            if i < 5000 {
+                usleep(1000)
+            } else {
+                usleep(100)
+            }
+            let _ = pb.inc()
             
         }
     }

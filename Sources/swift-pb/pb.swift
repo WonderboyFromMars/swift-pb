@@ -165,7 +165,7 @@ public struct ProgressBar {
         
         if self.showPercent {
             let percent = Double(current) / (Double(total) / 100.0)
-            suffix = suffix + String(format: "%.01f %", percent.isNaN ? 0.0 : percent)
+            suffix = suffix + String(format: "%.0f%% ", percent.isNaN ? 0.0 : percent)
         }
         
         if showSpeed {
@@ -182,9 +182,9 @@ public struct ProgressBar {
             if total > current {
                 let left = 1.0 / speed * Double(total - current)
                 if left < 60.0 {
-                    suffix = suffix + String(format: "%.00f s", left)
+                    suffix = suffix + String(format: "%.00fs", left)
                 } else {
-                    suffix = suffix + String(format: "%.00f m", left / 60.0)
+                    suffix = suffix + String(format: "%.00fm", left / 60.0)
                 }
             }
         }
